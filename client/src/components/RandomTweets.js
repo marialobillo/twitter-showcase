@@ -1,9 +1,9 @@
 import React from 'react';
 
-function RandomTweets(){
+function RandonTweets(){
     return (
-        <h1 className="text-center">Random Tweets</h1>
+        <h1 className="text-center">Hello from RandomTweets</h1>
     );
 }
 
-export default RandomTweets;
+export default RandonTweets;
