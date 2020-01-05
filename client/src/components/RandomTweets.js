@@ -1,8 +1,13 @@
 import React from 'react';
+import TweetList from './TweetList';
 
-function RandonTweets(){
+function RandonTweets({tweetRandomList}){
     return (
-        <h1 className="text-center">Hello from RandomTweets</h1>
+        <div className="container">
+            <h1 className="text-center">Hello from RandomTweets</h1>
+            <TweetList tweetList={tweetRandomList} />
+        </div>
+
     );
 }
 
