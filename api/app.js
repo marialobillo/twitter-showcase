@@ -27,12 +27,12 @@ function gotData(err, data, response) {
 
 T.get('search/tweets', params, gotData);
 
-function respondeSearch(){
+function respondSearch(){
 
 }
 
 function respondRandom(){
-    
+
 }
 
 app.get('/search', respondSearch);
