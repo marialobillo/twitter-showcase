@@ -1,4 +1,7 @@
 const Twit = require('twit')
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 9000;
 
 let T = new Twit({
     consumer_key: 'ljFxeJBqmaKhyLcGjNVeOZNZU',
@@ -23,4 +26,18 @@ function gotData(err, data, response) {
 
 
 T.get('search/tweets', params, gotData);
+
+function respondeSearch(){
+
+}
+
+function respondRandom(){
+    
+}
+
+app.get('/search', respondSearch);
+app.get('/random', respondRandom);
+
+app.listen(port, 
+    () => console.log('Server listening on port ${port}'));
 
