@@ -25,19 +25,23 @@ function gotData(err, data, response) {
 }
 
 
-T.get('search/tweets', params, gotData);
+//T.get('search/tweets', params, gotData);
 
-function respondSearch(){
-
+function respondSearch(req, res){
+    const { input = ''} = req.query
+    params.q = input;
+    
+   T.get('search/tweets', params, gotData);
+   
 }
 
 function respondRandom(){
 
 }
 
-app.get('/search', respondSearch);
+app.get('/search/*', respondSearch);
 app.get('/random', respondRandom);
 
 app.listen(port, 
-    () => console.log('Server listening on port ${port}'));
+    () => console.log(`Server listening on port ${port}`));
 
