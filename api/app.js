@@ -1,4 +1,7 @@
-const Twit = require('twit')
+const Twit = require('twit');
+//const axios = require('axios');
+const fetch = require('cross-fetch');
+
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 9000;
@@ -11,27 +14,51 @@ let T = new Twit({
 });
 
 
-
 let params = { 
     q: 'banana', 
-    count: 10, 
+    count: 2, 
     lang: 'eu'
 };
+const datasearch = [];
 
 function gotData(err, data, response) {
-    data.statuses.forEach(twett => {
-        console.log("---> ", twett.text);
+    
+    data.statuses.map(twett => {
+        let datatwett = {};
+        datatwett.profile_image_url = twett.user.profile_image_url;
+        datatwett.screen_name = twett.user.screen_name;
+        datatwett.name = twett.user.name;
+        datatwett.text = twett.text;
+        datatwett.created_at = twett.created_at;
+        datatwett.retwett_count = twett.retweet_count;
+        datatwett.favorite_count = twett.favorite_count;
+
+        datasearch.push(datatwett);
     })
+    console.log('THE SEARCH DATA', datasearch);
+    return datasearch;
 }
 
-
-//T.get('search/tweets', params, gotData);
 
 function respondSearch(req, res){
     const { input = ''} = req.query
     params.q = input;
     
-   T.get('search/tweets', params, gotData);
+   T.get('search/tweets', params, (err, data, response) => {
+        data.statuses.map(twett => {
+            let datatwett = {};
+            datatwett.profile_image_url = twett.user.profile_image_url;
+            datatwett.screen_name = twett.user.screen_name;
+            datatwett.name = twett.user.name;
+            datatwett.text = twett.text;
+            datatwett.created_at = twett.created_at;
+            datatwett.retwett_count = twett.retweet_count;
+            datatwett.favorite_count = twett.favorite_count;
+
+            datasearch.push(datatwett);
+        })
+        res.json(datasearch);
+   });
    
 }
 
@@ -40,7 +67,7 @@ function respondRandom(){
 }
 
 app.get('/search/*', respondSearch);
-app.get('/random', respondRandom);
+//app.get('/random', respondRandom);
 
 app.listen(port, 
     () => console.log(`Server listening on port ${port}`));
