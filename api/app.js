@@ -19,8 +19,9 @@ let params = {
 };
 const datasearch = [];
 
+/*
 function gotData(err, data, response) {
-    
+    const datasearch = [];
     data.statuses.map(twett => {
         let datatwett = {};
         datatwett.profile_image_url = twett.user.profile_image_url;
@@ -33,14 +34,15 @@ function gotData(err, data, response) {
 
         datasearch.push(datatwett);
     })
-    console.log('THE SEARCH DATA', datasearch);
+
     return datasearch;
 }
-
+*/
 
 function respondSearch(req, res){
     const { input = ''} = req.query
     params.q = input;
+    params.count = 10;
     
    T.get('search/tweets', params, (err, data, response) => {
         data.statuses.map(twett => {

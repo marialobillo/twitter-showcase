@@ -5,7 +5,7 @@ class SearchTweets extends Component {
     constructor(){
         super();
         this.state = {
-          searchResult: ''
+          searchResult: []
         }
     }
     componentDidMount(){
@@ -17,18 +17,11 @@ class SearchTweets extends Component {
 
         const request = await fetch(url);
         const data = await request.json();
-        console.log(data);
+        console.log('the data',data);
         
-        /*
-        fetch(url)
-            .then(res => res.text())
-            .then(res => {
-            //console.log(res);
-            const results = res.json();
-            this.setState({ searchResult: results})
-            })
-            .catch(err => console.log('Error the calling API', err));
-        */
+        this.setState({
+           // searchResult: data
+        })
     }
     
     render(){
