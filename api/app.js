@@ -17,7 +17,7 @@ let params = {
     count: 2, 
     lang: 'eu'
 };
-const datasearch = [];
+
 
 /*
 function gotData(err, data, response) {
@@ -40,6 +40,7 @@ function gotData(err, data, response) {
 */
 
 function respondSearch(req, res){
+    const datasearch = [];
     const { input = ''} = req.query
     params.q = input;
     params.count = 10;
