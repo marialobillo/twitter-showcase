@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import TweetList from './TweetList';
 
 
 class SearchTweets extends Component {
@@ -17,15 +18,15 @@ class SearchTweets extends Component {
 
         const request = await fetch(url);
         const data = await request.json();
-        console.log('the data',data);
+        const result = [];
+        data.map(item => { result.push(item)});
         
         this.setState({
-           // searchResult: data
+           searchResult: result
         })
     }
     
     render(){
-        const list = this.state.searchResult;
         return (
             <div className="container">
                 <h1 className="text-center">Hello from Searching Tweets</h1>
@@ -35,7 +36,7 @@ class SearchTweets extends Component {
                         className="form-control form-control-lg" />
                 </div>
                 <div className="">
-                    {list}
+                   <TweetList twetts={this.state.searchResult} />
                     
                 </div>
             </div>

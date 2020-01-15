@@ -55,6 +55,7 @@ function respondSearch(req, res){
             datatwett.created_at = twett.created_at;
             datatwett.retwett_count = twett.retweet_count;
             datatwett.favorite_count = twett.favorite_count;
+            datatwett.id = twett.id;
 
             datasearch.push(datatwett);
         })

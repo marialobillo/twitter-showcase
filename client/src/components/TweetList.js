@@ -1,14 +1,16 @@
 import React from 'react';
 import Tweet from './Tweet';
 
-const TweetList = ({tweets}) => (
-    <div className="row">
+const TweetList = ({twetts}) => (
+    <div className="container row">
         <div className="tweet">
-            {tweets.map(tweet => (
-                <Tweet 
-                    key={tweet.id}
-                    tweet={tweet}
-                />
+            {twetts.map(twett => (
+                <div>
+                    <Tweet 
+                        twett={twett}
+                        key={twett.id}
+                    />
+                </div>
             ))}
         </div>
     </div>

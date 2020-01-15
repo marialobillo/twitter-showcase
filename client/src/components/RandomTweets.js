@@ -5,7 +5,7 @@ function RandonTweets({tweetRandomList}){
     return (
         <div className="container">
             <h1 className="text-center">Hello from RandomTweets</h1>
-            <TweetList tweetList={tweetRandomList} />
+            <TweetList tweet={tweetRandomList} />
         </div>
 
     );
