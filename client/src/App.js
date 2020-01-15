@@ -8,35 +8,8 @@ import RandomTweets from './components/RandomTweets';
 
 
 class App extends Component {
-  constructor(){
-    super();
-    this.state = {
-      
-    }
-  }
-  componentDidMount(){
-    //this.getRequest();
-    this.callAPI();
-  }
-
-  callAPI(input = 'hola'){
-    fetch(`http://localhost:9000/search/?input=${input}`)
-      .then(res => res.text())
-      .then(res => this.setState({ }))
-      .catch(err => console.log('Error the calling API', err));
-  }
-
-  getRequest = async (input = 'hola') => {
-    console.log('Hola');
-    const url = `http://localhost:9000/search/?input=${input}`;
-
-    const request = await fetch(url);
-    const twetts = await request.json();
-
-    console.log(twetts);
-    console.log('Adios');
-  }
-
+ 
+ 
   render() {
     return (
       <div className="">
@@ -52,7 +25,6 @@ class App extends Component {
                 component={RandomTweets} />
             </Switch>
           </main>
-
           <footer className="text-center">Twtter Showcase App.</footer>
         </Router>
       </div>

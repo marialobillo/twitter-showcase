@@ -2,6 +2,7 @@ const Twit = require('twit');
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 9000;
+const cors = require('cors');
 
 let T = new Twit({
     consumer_key: 'ljFxeJBqmaKhyLcGjNVeOZNZU',
@@ -91,6 +92,7 @@ LeaVerou
 dan_abramov
 kentcdodds
 */
+app.use(cors());
 
 app.get('/search/*', respondSearch);
 app.get('/users/*', respondUserTwetts);
