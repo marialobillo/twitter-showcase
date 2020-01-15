@@ -18,26 +18,10 @@ let params = {
     lang: 'eu'
 };
 
-
-/*
-function gotData(err, data, response) {
-    const datasearch = [];
-    data.statuses.map(twett => {
-        let datatwett = {};
-        datatwett.profile_image_url = twett.user.profile_image_url;
-        datatwett.screen_name = twett.user.screen_name;
-        datatwett.name = twett.user.name;
-        datatwett.text = twett.text;
-        datatwett.created_at = twett.created_at;
-        datatwett.retwett_count = twett.retweet_count;
-        datatwett.favorite_count = twett.favorite_count;
-
-        datasearch.push(datatwett);
-    })
-
-    return datasearch;
+function handleDate(date){
+    const newDate =  date.split('+')[0];
+    console.log(newDate);
 }
-*/
 
 function respondSearch(req, res){
     const datasearch = [];
@@ -52,6 +36,7 @@ function respondSearch(req, res){
             datatwett.screen_name = twett.user.screen_name;
             datatwett.name = twett.user.name;
             datatwett.text = twett.text;
+            handleDate(twett.created_at);
             datatwett.created_at = twett.created_at;
             datatwett.retwett_count = twett.retweet_count;
             datatwett.favorite_count = twett.favorite_count;
