@@ -5,7 +5,7 @@ const TweetList = ({twetts}) => (
     <div className="container row">
         <div className="tweet">
             {twetts.map(twett => (
-                <div>
+                <div key={twett.id}>
                     <Tweet 
                         twett={twett}
                         key={twett.id}

@@ -10,10 +10,10 @@ class SearchTweets extends Component {
         }
     }
     componentDidMount(){
-        this.callAPI();
+        this.getRequest();
     }
 
-    callAPI = async (input = 'banana') => {
+    getRequest = async (input) => {
         const url = `http://localhost:9000/search/?input=${input}`;
 
         const request = await fetch(url);
@@ -25,15 +25,32 @@ class SearchTweets extends Component {
            searchResult: result
         })
     }
+
+    handleChange = (event) => {
+        this.setState({
+            query: event.target.value
+        })
+    }
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+
+        const query = this.state.query;
+
+        this.getRequest(query);
+    }
     
     render(){
         return (
             <div className="container">
                 <h1 className="text-center">Hello from Searching Tweets</h1>
                 <div className="">
+                    <form onSubmit={this.handleSubmit}>
                     <input
-                        onChange={this.handleChange}
-                        className="form-control form-control-lg" />
+                        name="query"
+                        className="form-control form-control-lg" 
+                        onChange={this.handleChange}/>
+                    </form>
                 </div>
                 <div className="">
                    <TweetList twetts={this.state.searchResult} />
