@@ -1,8 +1,10 @@
 const Twit = require('twit');
 const express = require('express');
-const app = express();
 const port = process.env.PORT || 9000;
 const cors = require('cors');
+
+const app = express();
+
 
 let T = new Twit({
     consumer_key: 'ljFxeJBqmaKhyLcGjNVeOZNZU',
@@ -19,8 +21,8 @@ let params = {
 };
 
 function handleDate(date){
-    const newDate =  date.split('+')[0];
-    console.log(newDate);
+    return date.split('+')[0];
+   
 }
 
 function respondSearch(req, res){
@@ -36,8 +38,7 @@ function respondSearch(req, res){
             datatwett.screen_name = twett.user.screen_name;
             datatwett.name = twett.user.name;
             datatwett.text = twett.text;
-            handleDate(twett.created_at);
-            datatwett.created_at = twett.created_at;
+            datatwett.created_at = handleDate(twett.created_at);
             datatwett.retwett_count = twett.retweet_count;
             datatwett.favorite_count = twett.favorite_count;
             datatwett.id = twett.id;
@@ -61,10 +62,11 @@ function respondUserTwetts(req, res){
             datatwett.screen_name = twett.user.screen_name;
             datatwett.name = twett.user.name;
             datatwett.text = twett.text;
-            datatwett.created_at = twett.created_at;
+            datatwett.created_at = handleDate(twett.created_at);
             datatwett.retwett_count = twett.retweet_count;
             datatwett.favorite_count = twett.favorite_count;
-
+            datatwett.id = twett.id;
+            
             datasearch.push(datatwett);
         })
         let randomNumber = Math.floor(Math.random() * 20);
@@ -72,19 +74,17 @@ function respondUserTwetts(req, res){
       })
 }
 
-/*
-FOR SEARCH: localhost:9000/search/?input=input
-FOR USERS: localhost:9000/uses/?input=screen_name
-brendaneich
-_ericelliot
-LeaVerou
-dan_abramov
-kentcdodds
-*/
+
 app.use(cors());
 
 app.get('/search/*', respondSearch);
 app.get('/users/*', respondUserTwetts);
+
+// For React
+app.use(express.static(path.join(__dirname, 'build')))
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 app.listen(port, 
     () => console.log(`Server listening on port ${port}`));
