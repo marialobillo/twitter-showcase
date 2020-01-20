@@ -9,9 +9,6 @@ class SearchTweets extends Component {
           searchResult: []
         }
     }
-    componentDidMount(){
-        this.getRequest();
-    }
 
     getRequest = async (input) => {
         const url = `http://localhost:9000/search/?input=${input}`;
@@ -43,7 +40,7 @@ class SearchTweets extends Component {
     render(){
         return (
             <div className="container">
-                <h1 className="text-center">Hello from Searching Tweets</h1>
+                <h1 className="text-center">Search Twetts about any Topic</h1>
                 <div className="">
                     <form onSubmit={this.handleSubmit}>
                     <input
