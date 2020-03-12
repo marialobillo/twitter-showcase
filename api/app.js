@@ -9,10 +9,10 @@ const app = express();
 
 
 let T = new Twit({
-    consumer_key: 'ljFxeJBqmaKhyLcGjNVeOZNZU',
-    consumer_secret: 'CojBFeX6Tge8kVTwcF1B6CtxuJHIyca2A3cgwX6FSjKheaMcpW',
-    access_token: '60619926-1UwW0bEGpMzJnFxctsXhCKaB48YMPdvLC70Im2cm2',
-    access_token_secret: '9kQmJjxmiwAmfvIx0EDc8yHJFniMP6fptfyM8x3Tmt6rS'
+    consumer_key: process.env.API_KEY,
+    consumer_secret: process.env.API_KEY_SECRET,
+    access_token: process.env.ACCESS_TOKEN,
+    access_token_secret: process.env.ACCESS_TOKEN_SECRET
 });
 
 
