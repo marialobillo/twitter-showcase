@@ -38,13 +38,13 @@ class RandomTweets extends Component {
 
 
     render(){
-        const userCards = this.state.users.map(user => {
+        const usersCards = this.state.users.map(user => {
             return (
-                <div className="col-md-2">
+                <div className="col-md-2" key={user.name}>
                        <span className="">{user.name}</span>
                        <button 
                         className="btn btn-info"
-                        onClick={() => this.handleClick({user.username})}>
+                        onClick={() => this.handleClick(user.username)}>
                            Show Twetts
                         </button>
                     </div>
