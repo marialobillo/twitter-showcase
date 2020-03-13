@@ -3,6 +3,8 @@ require('dotenv').config();
 const express = require('express');
 const port = process.env.PORT || 9000;
 const cors = require('cors');
+const path = require('path');
+const dateHelper = require('./helpers/date-helpers');
 
 
 const app = express();
@@ -15,65 +17,59 @@ let T = new Twit({
     access_token_secret: process.env.ACCESS_TOKEN_SECRET
 });
 
+function respondSearch(req, res) {
+    const { input = '' } = req.query;
 
-let params = { 
-    q: 'banana', 
-    count: 2, 
-    lang: 'eu'
-};
+    let params = {
+        q: input,
+        count: 19,
+        lang: 'eu'
+    };
 
-function handleDate(date){
-    return date.split('+')[0];
-   
-}
 
-function respondSearch(req, res){
-    const datasearch = [];
-    const { input = ''} = req.query
-    params.q = input;
-    params.count = 10;
-    
-   T.get('search/tweets', params, (err, data, response) => {
-        data.statuses.map(twett => {
+    T.get('search/tweets', params, (err, data, response) => {
+        const tweets = data.statuses.map(twett => {
             let datatwett = {};
             datatwett.profile_image_url = twett.user.profile_image_url;
             datatwett.screen_name = twett.user.screen_name;
             datatwett.name = twett.user.name;
             datatwett.text = twett.text;
-            datatwett.created_at = handleDate(twett.created_at);
+            datatwett.created_at = dateHelper.handleDate(twett.created_at);
             datatwett.retwett_count = twett.retweet_count;
             datatwett.favorite_count = twett.favorite_count;
             datatwett.id = twett.id;
 
-            datasearch.push(datatwett);
+            return datatwett;
         })
-        res.json(datasearch);
-   });
-   
+        res.json(tweets);
+    });
+
 }
 
-function respondUserTwetts(req, res){
-    const { input = ''} = req.query;
-    var options = { screen_name: input,
-                count: 20 };
-    const datasearch = [];
-    T.get('statuses/user_timeline', options , (err, data) => {
-        data.map(twett => {
+function respondUserTwetts(req, res) {
+    const { input = "" } = req.query;
+    var options = {
+        screen_name: input,
+        count: 20
+    };
+   
+    T.get('statuses/user_timeline', options, (err, data) => {
+        const dataSearch = data.map(twett => {
             let datatwett = {};
             datatwett.profile_image_url = twett.user.profile_image_url;
             datatwett.screen_name = twett.user.screen_name;
             datatwett.name = twett.user.name;
             datatwett.text = twett.text;
-            datatwett.created_at = handleDate(twett.created_at);
+            datatwett.created_at = dateHelper.handleDate(twett.created_at);
             datatwett.retwett_count = twett.retweet_count;
             datatwett.favorite_count = twett.favorite_count;
             datatwett.id = twett.id;
-            
-            datasearch.push(datatwett);
+
+            return datatwett;
         })
         let randomNumber = Math.floor(Math.random() * 20);
-        res.json(datasearch[randomNumber]);
-      })
+        res.json(dataSearch[randomNumber]);
+    })
 }
 
 
@@ -89,21 +85,22 @@ app.get('/*', (req, res) => {
 });
 
 //production mode
-if(process.env.NODE_ENV === 'production') {  
-    app.use(express.static(path.join(__dirname, 'client/build')));  
-    app.get('*', (req, res) => {    
-        res.sendfile(path.join(__dirname = 'client/build/index.html'));  
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, 'client/build')));
+    app.get('*', (req, res) => {
+        res.sendfile(path.join(__dirname = 'client/build/index.html'));
     }
-)}
+    )
+}
 
 //build mode
-app.get('*', (req, res) => {  
+app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/client/public/index.html'));
 })
 
 //start server
-app.listen(port, (req, res) => {  
-    console.log( `Server listening on port: ${port}`);
+app.listen(port, (req, res) => {
+    console.log(`Server listening on port: ${port}`);
 });
 
 
